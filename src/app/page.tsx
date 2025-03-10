@@ -3,6 +3,8 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { FiArrowUpRight, FiStar } from "react-icons/fi";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -30,10 +32,10 @@ const Form = () => {
           variants={primaryVariants}
           className="mb-2 text-center text-4xl font-semibold"
         >
-          Create your account
+          Análise Licitação Produtos
         </motion.h1>
         <motion.p variants={primaryVariants} className="mb-8 text-center">
-          Try it free for 30 days, no CC required
+          Faça login para acessar
         </motion.p>
 
         <form onSubmit={(e) => e.preventDefault()} className="w-full">
@@ -75,7 +77,7 @@ const Form = () => {
               scale: 0.985,
             }}
             type="submit"
-            className="my-1.5 w-full rounded bg-indigo-600 px-4 py-2 text-center font-medium text-white transition-colors hover:bg-indigo-700"
+            className="my-2 w-full rounded bg-indigo-600 px-4 py-2 text-center font-medium text-white transition-colors hover:bg-indigo-700 cursor-pointer"
           >
             Entrar
           </motion.button>
@@ -93,7 +95,7 @@ const Form = () => {
 
 const SupplementalContent = () => {
   return (
-    <div className="group sticky top-4 m-4 h-80 overflow-hidden rounded-3xl rounded-tl-[4rem] bg-slate-950 md:h-[calc(100vh_-_2rem)]">
+    <Link href='https://www.r7digital.com.br/' target="_blank" className="group sticky top-4 m-4 h-80 overflow-hidden rounded-3xl rounded-tl-[4rem] bg-slate-950 md:h-[calc(100vh_-_2rem)] cursor-pointer">
       <img
         alt="An example image"
         src="https://www.actian.com/wp-content/uploads/2023/11/AV36-A.jpg"
@@ -117,16 +119,13 @@ const SupplementalContent = () => {
           className="mb-2 text-3xl font-semibold leading-[1.25] text-white lg:text-4xl"
           variants={primaryVariants}
         >
-          Connecting Designers
-          <br />
-          with Opportunities
+          R7 Digital
         </motion.h2>
         <motion.p
           variants={primaryVariants}
           className="mb-6 max-w-md text-sm text-slate-300"
         >
-          Bloop is the home of makers, making amazing things, and getting paid.
-          Find your dream job with us.
+          Localizada em Florianópolis, Santa Catarina, estamos há mais de 10 anos no mercado de TI. Trabalhamos exclusivamente com órgãos públicos nas esferas federal, estadual e municipal.
         </motion.p>
         <div className="flex items-center gap-4">
           <div className="flex items-center">
@@ -134,31 +133,31 @@ const SupplementalContent = () => {
               variants={avatarVariants}
               className="h-8 w-8 rounded-full border-[1px] border-slate-100 object-cover shadow-inner"
               alt="A placeholder testimonial image"
-              src="/imgs/head-shots/1.jpg"
+              src="https://blog.emania.com.br/wp-content/uploads/2016/06/foto-de-perfil-fidelidade.jpg"
             />
             <motion.img
               variants={avatarVariants}
               className="-ml-4 h-8 w-8 rounded-full border-[1px] border-slate-100 object-cover shadow-inner"
               alt="A placeholder testimonial image"
-              src="/imgs/head-shots/2.jpg"
+              src="https://blog.emania.com.br/wp-content/uploads/2016/06/foto-de-perfil-fidelidade.jpg"
             />
             <motion.img
               variants={avatarVariants}
               className="-ml-4 h-8 w-8 rounded-full border-[1px] border-slate-100 object-cover shadow-inner"
               alt="A placeholder testimonial image"
-              src="/imgs/head-shots/3.jpg"
+              src="https://blog.emania.com.br/wp-content/uploads/2016/06/foto-de-perfil-fidelidade.jpg"
             />
             <motion.img
               variants={avatarVariants}
               className="-ml-4 h-8 w-8 rounded-full border-[1px] border-slate-100 object-cover shadow-inner"
               alt="A placeholder testimonial image"
-              src="/imgs/head-shots/4.jpg"
+              src="https://blog.emania.com.br/wp-content/uploads/2016/06/foto-de-perfil-fidelidade.jpg"
             />
             <motion.img
               variants={avatarVariants}
               className="-ml-4 h-8 w-8 rounded-full border-[1px] border-slate-100 object-cover shadow-inner"
               alt="A placeholder testimonial image"
-              src="/imgs/head-shots/6.jpg"
+              src="https://blog.emania.com.br/wp-content/uploads/2016/06/foto-de-perfil-fidelidade.jpg"
             />
           </div>
           <div>
@@ -168,18 +167,18 @@ const SupplementalContent = () => {
               <FiStar className="fill-yellow-300 text-sm text-yellow-300" />
               <FiStar className="fill-yellow-300 text-sm text-yellow-300" />
               <FiStar className="fill-yellow-300 text-sm text-yellow-300" />
-              <span className="ml-2 text-sm text-white">5.0</span>
+              <span className="ml-2 text-sm text-white -translate-y-0.5">5.0</span>
             </motion.div>
             <motion.p
               variants={primaryVariants}
               className="text-xs text-slate-300"
             >
-              from over 100,000 reviews
+              Aprovada por mais de 100,000.00 clientes
             </motion.p>
           </div>
         </div>
       </motion.div>
-    </div>
+    </Link>
   );
 };
 
@@ -188,7 +187,12 @@ const Logo = () => {
     <div
       className="absolute left-[50%] top-4 -translate-x-[50%] fill-slate-950 md:left-4 md:-translate-x-0"
     >
-      LOGO
+      <Image
+        alt="The Bloop logo"
+        src="/imgs/logo.png"
+        width={50}
+        height={50}
+      />
     </div>
   );
 };
