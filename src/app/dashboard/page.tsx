@@ -1,14 +1,15 @@
 'use client'
 
-import { motion } from "framer-motion";
-import { FaSearch, FaChartLine, FaMoneyBillWave, FaStore } from 'react-icons/fa';
-import { Line } from 'react-chartjs-2';
+import { motion } from 'framer-motion';
+import { FaSearch, FaChartLine, FaMoneyBillWave, FaStore, FaUser } from 'react-icons/fa';
+import { Line, Bar } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
   PointElement,
   LineElement,
+  BarElement,
   Title,
   Tooltip,
   Legend,
@@ -20,6 +21,7 @@ ChartJS.register(
   LinearScale,
   PointElement,
   LineElement,
+  BarElement,
   Title,
   Tooltip,
   Legend
@@ -27,47 +29,88 @@ ChartJS.register(
 
 export default function Dashboard() {
   const stats = [
-    { title: "Total Searches", value: "12,430", icon: FaSearch, change: "+12.3%" },
-    { title: "Best Deal Found", value: "$299", icon: FaMoneyBillWave, change: "-24.5%" },
-    { title: "Stores Tracked", value: "48", icon: FaStore, change: "+3 new" },
-    { title: "Avg. Savings", value: "27%", icon: FaChartLine, change: "+8.2%" },
+    { title: "Itens Pesquisados", value: "12,430", icon: FaSearch, change: "+12.3%" },
+    { title: "Preço Médio", value: "R$290.00", icon: FaMoneyBillWave, change: "-24.5%" },
+    { title: "Empresas Pesquisadas", value: "3", icon: FaStore, change: "+3 novas" },
+    { title: "Pesquisas", value: "550", icon: FaChartLine, change: "+8.2%" },
   ];
 
   const chartData = {
-    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+    labels: ['Out', 'Nov', 'Dez', 'Jan', 'Fev', 'Mar'],
     datasets: [
       {
-        label: 'Price Trends',
-        data: [650, 590, 800, 810, 560, 550],
+        label: 'Preço Médio',
+        data: [350, 400, 200, 230, 280, 290],
         borderColor: '#4f46e5',
         backgroundColor: 'rgba(79, 70, 229, 0.2)',
         tension: 0.4,
+      },
+      {
+        label: 'Preço Mínimo',
+        data: [300, 320, 180, 220, 210, 240],
+        borderColor: '#22c55e',
+        backgroundColor: 'rgba(34, 197, 94, 0.2)',
+        tension: 0.4,
+      },
+      {
+        label: 'Preço Máximo',
+        data: [500, 450, 250, 240, 400, 320],
+        borderColor: '#f97316',
+        backgroundColor: 'rgba(249, 115, 22, 0.2)',
+        tension: 0.4,
+      }
+    ],
+  };
+
+  const searchTrendData = {
+    labels: ['Out', 'Nov', 'Dez', 'Jan', 'Fev', 'Mar'],
+    datasets: [
+      {
+        label: 'Total Searches',
+        data: [1250, 1890, 2100, 2430, 1960, 2300],
+        backgroundColor: '#4f46e5',
+        borderRadius: 8,
+      },
+    ],
+  };
+
+  const userActivityData = {
+    labels: ['João', 'Paulo', 'Silvio', 'Ruan', 'Maria'],
+    datasets: [
+      {
+        label: 'Pesquisas',
+        data: [430, 390, 285, 240, 210],
+        backgroundColor: '#818cf8',
+        borderColor: '#4f46e5',
+        borderWidth: 2,
+        borderRadius: 6,
       },
     ],
   };
 
   const recentSearches = [
-    { product: "PlayStation 5", store: "Amazon", price: "$499", status: "Deal" },
-    { product: "MacBook Pro M2", store: "Best Buy", price: "$1899", status: "Alert" },
-    { product: "Samsung OLED TV", store: "Walmart", price: "$1399", status: "Tracked" },
+    { product: "PlayStation 5", store: "Kabum", price: "R$3500", status: "Excelente" },
+    { product: "MacBook Pro M2", store: "Pauta", price: "R$12999", status: "Bom" },
+    { product: "iPhone 13 Pro", store: "Apple Store", price: "R$7999", status: "Ruim" },
+    { product: "Samsung Galaxy S21", store: "Magazine Luiza", price: "R$3999", status: "Excelente" },
+    { product: "Xiaomi Redmi Note 10", store: "Amazon", price: "R$1499", status: "Bom" },
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="flex bg-gray-50 dark:bg-gray-900">
       <SideBar />
-      <div className="ml-72 p-8">
+      <div className="flex-1 p-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
           <div className="flex justify-between items-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Deal Dashboard</h1>
-            <span className="text-indigo-600 dark:text-indigo-400">Today: {new Date().toLocaleDateString()}</span>
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Pedidos Dashboard</h1>
+            <span className="text-indigo-600 dark:text-indigo-400">Hoje: {new Date().toLocaleDateString()}</span>
           </div>
 
-          {/* Stats Grid */}
-          <div className="grid grid-cols-4 gap-6 mb-8">
+          <div className="grid grid-cols-4 gap-6 mb-8 cursor-pointer">
             {stats.map((stat, index) => (
               <motion.div
                 key={index}
@@ -86,7 +129,6 @@ export default function Dashboard() {
             ))}
           </div>
 
-          {/* Chart */}
           <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm mb-8">
             <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Price Trends Analysis</h2>
             <div className="h-96">
@@ -105,7 +147,7 @@ export default function Dashboard() {
                     },
                     y: { 
                       grid: { color: '#e5e7eb' },
-                      ticks: { color: '#6b7280' }
+                      ticks: { color: '#6b7280'}
                     },
                   },
                 }}
@@ -113,15 +155,82 @@ export default function Dashboard() {
             </div>
           </div>
 
-          {/* Recent Searches */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <motion.div 
+              whileHover={{ scale: 1.01 }}
+              className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm"
+            >
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                <FaChartLine className="inline mr-2 text-indigo-600" />
+                Pesquisas Mensais
+              </h2>
+              <div className="h-80">
+                <Bar
+                  data={searchTrendData}
+                  options={{
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                      legend: { display: false },
+                      tooltip: { enabled: true }
+                    },
+                    scales: {
+                      x: {
+                        grid: { display: false },
+                        ticks: { color: '#6b7280' }
+                      },
+                      y: {
+                        grid: { color: '#e5e7eb' },
+                        ticks: { color: '#6b7280' }
+                      },
+                    },
+                  }}
+                />
+              </div>
+            </motion.div>
+
+            <motion.div 
+              whileHover={{ scale: 1.01 }}
+              className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm"
+            >
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                <FaUser className="inline mr-2 text-indigo-600" />
+                Pesquisas por Usuários
+              </h2>
+              <div className="h-80">
+                <Bar
+                  data={userActivityData}
+                  options={{
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                      legend: { display: false },
+                    },
+                    scales: {
+                      x: {
+                        grid: { display: false },
+                        ticks: { color: '#6b7280' }
+                      },
+                      y: {
+                        grid: { display: false },
+                        ticks: { color: '#6b7280' }
+                      },
+                    },
+                  }}
+                />
+              </div>
+            </motion.div>
+          </div>
+
           <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Recent Searches</h2>
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Itens Recentemente Selecionados</h2>
             <div className="space-y-4">
               {recentSearches.map((search, index) => (
                 <motion.div
                   key={index}
                   whileHover={{ x: 10 }}
-                  className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg"
+                  className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg cursor-pointer"
                 >
                   <div className="flex-1">
                     <h3 className="font-medium text-gray-900 dark:text-white">{search.product}</h3>

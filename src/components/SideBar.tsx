@@ -1,3 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+
 'use client'
 
 import React, { useState } from "react";
@@ -7,11 +10,12 @@ import {
   FiHome,
   FiMonitor,
   FiShoppingCart,
-  FiTag,
   FiUsers,
 } from "react-icons/fi";
-import { motion } from "framer-motion";
 import { SiOpenai } from "react-icons/si";
+import { motion } from 'framer-motion';
+import ThemeToggle from "./ThemeToggle";
+import Link from "next/link";
 
 export default function SideBar() {
   const [open, setOpen] = useState(true);
@@ -20,7 +24,7 @@ export default function SideBar() {
   return (
     <motion.nav
       layout
-      className="sticky top-0 h-screen shrink-0 border-r border-slate-300 bg-white p-2"
+      className="sticky top-0 h-screen shrink-0 border-r border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 p-2"
       style={{
         width: open ? "225px" : "fit-content",
       }}
@@ -34,6 +38,7 @@ export default function SideBar() {
           selected={selected}
           setSelected={setSelected}
           open={open}
+          href="/dashboard"
         />
         <Option
           Icon={FiMonitor}
@@ -41,34 +46,39 @@ export default function SideBar() {
           selected={selected}
           setSelected={setSelected}
           open={open}
+          href="/produtos"
         />
         <Option
           Icon={FiShoppingCart}
-          title="Selecionados"
+          title="Selecionados v.2"
           selected={selected}
           setSelected={setSelected}
           open={open}
+          href="/selecionados"
         />
         <Option
           Icon={SiOpenai}
-          title="IA aplicada"
+          title="IA aplicada v.2"
           selected={selected}
           setSelected={setSelected}
           open={open}
+          href="/ia"
         />
         <Option
           Icon={FiBarChart}
-          title="Análise"
+          title="Análise v.3"
           selected={selected}
           setSelected={setSelected}
           open={open}
+          href="/analise"
         />
         <Option
           Icon={FiUsers}
-          title="Usuários"
+          title="Usuários v.2"
           selected={selected}
           setSelected={setSelected}
           open={open}
+          href="/usuarios"
         />
       </div>
 
@@ -77,53 +87,44 @@ export default function SideBar() {
   );
 };
 
-const Option = ({ Icon, title, selected, setSelected, open, notifs }) => {
+const Option = ({ Icon, title, selected, setSelected, open, href }) => {
   return (
-    <motion.button
-      layout
-      onClick={() => setSelected(title)}
-      className={`relative cursor-pointer flex h-10 w-full items-center rounded-md transition-colors ${selected === title ? "bg-indigo-100 text-indigo-800" : "text-slate-500 hover:bg-slate-100"}`}
-    >
-      <motion.div
+    <Link href={href}>
+      <motion.button
         layout
-        className="grid h-full w-10 place-content-center text-lg"
+        onClick={() => {setSelected(title)}}
+        className={`relative cursor-pointer flex h-10 w-full items-center rounded-md transition-colors ${
+          selected === title 
+            ? "bg-indigo-100 dark:bg-indigo-900/30 text-indigo-800 dark:text-indigo-300" 
+            : "text-slate-500 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700"
+        }`}
       >
-        <Icon />
-      </motion.div>
-      {open && (
-        <motion.span
+        <motion.div
           layout
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.125 }}
-          className="text-xs font-medium"
+          className="grid h-full w-10 place-content-center text-lg"
         >
-          {title}
-        </motion.span>
-      )}
-
-      {notifs && open && (
-        <motion.span
-          initial={{ scale: 0, opacity: 0 }}
-          animate={{
-            opacity: 1,
-            scale: 1,
-          }}
-          style={{ y: "-50%" }}
-          transition={{ delay: 0.5 }}
-          className="absolute right-2 top-1/2 size-4 rounded bg-indigo-500 text-xs text-white"
-        >
-          {notifs}
-        </motion.span>
-      )}
-    </motion.button>
+          <Icon className="dark:text-slate-300" />
+        </motion.div>
+        {open && (
+          <motion.span
+            layout
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.125 }}
+            className="text-xs font-medium dark:text-slate-200"
+          >
+            {title}
+          </motion.span>
+        )}
+      </motion.button>
+    </Link>
   );
 };
 
 const TitleSection = ({ open }) => {
   return (
-    <div className="mb-3 border-b border-slate-300 pb-3">
-      <div className="flex cursor-pointer items-center justify-between rounded-md transition-colors hover:bg-slate-100">
+    <div className="mb-3 border-b border-slate-300 dark:border-slate-700 pb-3">
+      <div className="flex items-center justify-between rounded-md transition-colors">
         <div className="flex items-center gap-2">
           <Logo />
           {open && (
@@ -133,11 +134,16 @@ const TitleSection = ({ open }) => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.125 }}
             >
-              <span className="block text-xs font-semibold">Cliente Pago</span>
-              <span className="block text-xs text-slate-500">Plano Pro</span>
+              <span className="block text-xs font-semibold dark:text-white">Cliente Pago</span>
+              <span className="block text-xs text-slate-500 dark:text-slate-400">Plano Pro</span>
             </motion.div>
           )}
         </div>
+        
+
+        {open && (
+        <ThemeToggle />
+        )}
       </div>
     </div>
   );
@@ -175,7 +181,7 @@ const ToggleClose = ({ open, setOpen }) => {
     <motion.button
       layout
       onClick={() => setOpen((pv) => !pv)}
-      className="absolute bottom-0 left-0 right-0 border-t cursor-pointer border-slate-300 transition-colors hover:bg-slate-100"
+      className="absolute bottom-0 left-0 right-0 border-t cursor-pointer border-slate-300 dark:border-slate-700 transition-colors hover:bg-slate-100 dark:hover:bg-slate-700"
     >
       <div className="flex items-center p-2">
         <motion.div
@@ -183,7 +189,7 @@ const ToggleClose = ({ open, setOpen }) => {
           className="grid size-10 place-content-center text-lg"
         >
           <FiChevronsRight
-            className={`transition-transform ${open && "rotate-180"}`}
+            className={`transition-transform ${open && "rotate-180"} dark:text-slate-300`}
           />
         </motion.div>
         {open && (
@@ -192,7 +198,7 @@ const ToggleClose = ({ open, setOpen }) => {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.125 }}
-            className="text-xs font-medium"
+            className="text-xs font-medium dark:text-white"
           >
             Reduzir
           </motion.span>
@@ -201,4 +207,3 @@ const ToggleClose = ({ open, setOpen }) => {
     </motion.button>
   );
 };
-
