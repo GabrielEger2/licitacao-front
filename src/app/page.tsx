@@ -71,16 +71,18 @@ const Form = () => {
             />
           </motion.div>
 
-          <motion.button
-            variants={primaryVariants}
-            whileTap={{
-              scale: 0.985,
-            }}
-            type="submit"
-            className="my-2 w-full rounded bg-indigo-600 px-4 py-2 text-center font-medium text-white transition-colors hover:bg-indigo-700 cursor-pointer"
-          >
-            Entrar
-          </motion.button>
+          <Link href="/dashboard">
+            <motion.button
+              variants={primaryVariants}
+              whileTap={{
+                scale: 0.985,
+              }}
+              type="submit"
+              className="my-2 w-full rounded bg-indigo-600 px-4 py-2 text-center font-medium text-white transition-colors hover:bg-indigo-700 cursor-pointer"
+            >
+              Entrar
+            </motion.button>
+          </Link>
           <motion.p variants={primaryVariants} className="text-xs">
             Ainda não tem uma conta?{" "}
             <a className="text-indigo-600 underline" href="#">
