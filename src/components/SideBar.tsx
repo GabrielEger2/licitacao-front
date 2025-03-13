@@ -16,10 +16,10 @@ import { SiOpenai } from "react-icons/si";
 import { motion } from 'framer-motion';
 import ThemeToggle from "./ThemeToggle";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function SideBar() {
   const [open, setOpen] = useState(true);
-  const [selected, setSelected] = useState("Dashboard");
 
   return (
     <motion.nav
@@ -35,48 +35,36 @@ export default function SideBar() {
         <Option
           Icon={FiHome}
           title="Dashboard"
-          selected={selected}
-          setSelected={setSelected}
           open={open}
           href="/dashboard"
         />
         <Option
           Icon={FiMonitor}
           title="Produtos"
-          selected={selected}
-          setSelected={setSelected}
           open={open}
           href="/produtos"
         />
         <Option
           Icon={FiShoppingCart}
           title="Selecionados v.2"
-          selected={selected}
-          setSelected={setSelected}
           open={open}
           href="/selecionados"
         />
         <Option
           Icon={SiOpenai}
           title="IA aplicada v.2"
-          selected={selected}
-          setSelected={setSelected}
           open={open}
           href="/ia"
         />
         <Option
           Icon={FiBarChart}
           title="Análise v.3"
-          selected={selected}
-          setSelected={setSelected}
           open={open}
           href="/analise"
         />
         <Option
           Icon={FiUsers}
           title="Usuários v.2"
-          selected={selected}
-          setSelected={setSelected}
           open={open}
           href="/usuarios"
         />
@@ -87,14 +75,13 @@ export default function SideBar() {
   );
 };
 
-const Option = ({ Icon, title, selected, setSelected, open, href }) => {
+const Option = ({ Icon, title, open, href }) => {
   return (
     <Link href={href}>
       <motion.button
         layout
-        onClick={() => {setSelected(title)}}
         className={`relative cursor-pointer flex h-10 w-full items-center rounded-md transition-colors ${
-          selected === title 
+          href === '/dashboard'
             ? "bg-indigo-100 dark:bg-indigo-900/30 text-indigo-800 dark:text-indigo-300" 
             : "text-slate-500 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700"
         }`}
@@ -134,7 +121,7 @@ const TitleSection = ({ open }) => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.125 }}
             >
-              <span className="block text-xs font-semibold dark:text-white">Cliente Pago</span>
+              <span className="block text-xs font-semibold dark:text-white">R7 Digital</span>
               <span className="block text-xs text-slate-500 dark:text-slate-400">Plano Pro</span>
             </motion.div>
           )}
@@ -153,25 +140,15 @@ const Logo = () => {
   return (
     <motion.div
       layout
-      className="grid size-10 shrink-0 place-content-center rounded-md bg-indigo-600"
+      className="grid size-10 shrink-0 place-content-center rounded-md"
     >
-      <svg
-        width="24"
-        height="auto"
-        viewBox="0 0 50 39"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        className="fill-slate-50"
-      >
-        <path
-          d="M16.4992 2H37.5808L22.0816 24.9729H1L16.4992 2Z"
-          stopColor="#000000"
-        ></path>
-        <path
-          d="M17.4224 27.102L11.4192 36H33.5008L49 13.0271H32.7024L23.2064 27.102H17.4224Z"
-          stopColor="#000000"
-        ></path>
-      </svg>
+      <Image
+        src="/imgs/logo.png"
+        alt="Logo"
+        width={40}
+        height={40}
+        layout="fixed"
+      />
     </motion.div>
   );
 };

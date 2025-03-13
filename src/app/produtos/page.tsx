@@ -5,11 +5,13 @@
 
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaBox, FaSearch, FaChevronLeft, FaChevronRight, FaFileExcel } from 'react-icons/fa';
+import { FaSearch, FaChevronLeft, FaChevronRight, FaFileExcel } from 'react-icons/fa';
 import SideBar from "@/components/SideBar";
 import { SyncLoader } from 'react-spinners';
 import * as XLSX from 'xlsx';
-
+import {
+  FiMonitor,
+} from "react-icons/fi";
 interface Product {
   id: string;
   nome: string;
@@ -59,11 +61,18 @@ export default function Products() {
     fetchProducts();
   }, []);
 
-  console.log(products);
-
-  const sortedProducts = products.filter(product =>
-    product.nome.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const searchLower = searchQuery.toLowerCase();
+  const sortedProducts = products
+    .filter(product => product.nome.toLowerCase().includes(searchLower))
+    .sort((a, b) => {
+      const aFirstWord = a.nome.split(' ')[0].toLowerCase();
+      const bFirstWord = b.nome.split(' ')[0].toLowerCase();
+      const aStarts = aFirstWord.startsWith(searchLower);
+      const bStarts = bFirstWord.startsWith(searchLower);
+  
+      if (aStarts === bStarts) return 0;
+      return aStarts ? -1 : 1;
+    });
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -81,24 +90,24 @@ export default function Products() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <div className="flex justify-between items-center mb-8">
+          <div className="flex justify-between items-center mb-7">
             <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
-              <FaBox className="text-indigo-600" />
+              <FiMonitor className="text-indigo-600" />
               Inventário de Produtos
             </h1>
             <div className='flex items-center gap-2'>
                 <div className="relative">
-                <input
-                    type="text"
-                    placeholder="Filtrar Produtos..."
-                    className="pl-10 pr-4 py-2 w-64 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-                    value={searchQuery}
-                    onChange={(e) => {
-                    setSearchQuery(e.target.value);
-                    setCurrentPage(1);
-                    }}
-                />
-                <FaSearch className="absolute left-3 top-3 text-gray-400 dark:text-gray-500" />
+                  <input
+                      type="text"
+                      placeholder="Filtrar Produtos..."
+                      className="pl-10 pr-4 py-2 w-64 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+                      value={searchQuery}
+                      onChange={(e) => {
+                      setSearchQuery(e.target.value);
+                      setCurrentPage(1);
+                      }}
+                  />
+                  <FaSearch className="absolute left-3 top-3 text-gray-400 dark:text-gray-500" />
                 </div>
                 <button
                     onClick={() => {
@@ -173,7 +182,7 @@ export default function Products() {
               </div>
 
               <motion.div
-                className="flex justify-between items-center mt-10"
+                className="flex justify-between items-center mt-8"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
               >

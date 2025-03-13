@@ -29,10 +29,10 @@ ChartJS.register(
 
 export default function Dashboard() {
   const stats = [
-    { title: "Itens Pesquisados", value: "12,430", icon: FaSearch, change: "+12.3%" },
+    { title: "Itens Pesquisados", value: "1,230", icon: FaSearch, change: "+12.3%" },
     { title: "Preço Médio", value: "R$290.00", icon: FaMoneyBillWave, change: "-24.5%" },
     { title: "Empresas Pesquisadas", value: "3", icon: FaStore, change: "+3 novas" },
-    { title: "Pesquisas", value: "550", icon: FaChartLine, change: "+8.2%" },
+    { title: "Pesquisas", value: "16", icon: FaChartLine, change: "+8.2%" },
   ];
 
   const chartData = {
@@ -43,21 +43,18 @@ export default function Dashboard() {
         data: [350, 400, 200, 230, 280, 290],
         borderColor: '#4f46e5',
         backgroundColor: 'rgba(79, 70, 229, 0.2)',
-        tension: 0.4,
       },
       {
         label: 'Preço Mínimo',
         data: [300, 320, 180, 220, 210, 240],
         borderColor: '#22c55e',
         backgroundColor: 'rgba(34, 197, 94, 0.2)',
-        tension: 0.4,
       },
       {
         label: 'Preço Máximo',
         data: [500, 450, 250, 240, 400, 320],
         borderColor: '#f97316',
         backgroundColor: 'rgba(249, 115, 22, 0.2)',
-        tension: 0.4,
       }
     ],
   };
@@ -67,7 +64,7 @@ export default function Dashboard() {
     datasets: [
       {
         label: 'Total Searches',
-        data: [1250, 1890, 2100, 2430, 1960, 2300],
+        data: [34399, 25098, 21030, 24305, 19602, 23001],
         backgroundColor: '#4f46e5',
         borderRadius: 8,
       },
