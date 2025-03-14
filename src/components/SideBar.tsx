@@ -17,14 +17,15 @@ import { motion } from 'framer-motion';
 import ThemeToggle from "./ThemeToggle";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 export default function SideBar() {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   return (
     <motion.nav
       layout
-      className="sticky top-0 h-screen shrink-0 border-r border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 p-2"
+      className="fixed top-0 h-screen shrink-0 border-r border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 p-2 z-50"
       style={{
         width: open ? "225px" : "fit-content",
       }}
@@ -72,16 +73,19 @@ export default function SideBar() {
 
       <ToggleClose open={open} setOpen={setOpen} />
     </motion.nav>
-  );
+  );  
 };
 
 const Option = ({ Icon, title, open, href }) => {
+  const pathname = usePathname();
+  const isActive = pathname === href.toLowerCase();
+
   return (
     <Link href={href}>
       <motion.button
         layout
         className={`relative cursor-pointer flex h-10 w-full items-center rounded-md transition-colors ${
-          href === '/dashboard'
+          isActive
             ? "bg-indigo-100 dark:bg-indigo-900/30 text-indigo-800 dark:text-indigo-300" 
             : "text-slate-500 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700"
         }`}

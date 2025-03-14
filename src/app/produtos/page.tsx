@@ -9,9 +9,9 @@ import { FaSearch, FaChevronLeft, FaChevronRight, FaFileExcel } from 'react-icon
 import SideBar from "@/components/SideBar";
 import { SyncLoader } from 'react-spinners';
 import * as XLSX from 'xlsx';
-import {
-  FiMonitor,
-} from "react-icons/fi";
+import Fuse from 'fuse.js';
+
+
 interface Product {
   id: string;
   nome: string;
@@ -33,23 +33,14 @@ export default function Products() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch('/data/products.xlsx');
-        const buffer = await response.arrayBuffer();
-        const workbook = XLSX.read(buffer, { type: 'array' });
-        const sheetName = workbook.SheetNames[0];
-        const jsonData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
+        const response = await fetch('/data/products.json');
+        if (!response.ok) {
+          throw new Error('Failed to load products');
+        }
 
-        const parsedProducts = jsonData.map((product) => ({
-          id: product.id,
-          nome: product.nome,
-          categoria: 'Eletrônicos',
-          preco: product.preco,
-          fornecedor: product.fornecedor,
-          site: product.site,
-          imagem: product.imagem,
-        }));
-
-        setProducts(parsedProducts);
+        const data = await response.json();
+        setProducts(data.Sheet1);
+        
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (err) {
         setError('Failed to load products');
@@ -61,18 +52,25 @@ export default function Products() {
     fetchProducts();
   }, []);
 
-  const searchLower = searchQuery.toLowerCase();
-  const sortedProducts = products
-    .filter(product => product.nome.toLowerCase().includes(searchLower))
-    .sort((a, b) => {
-      const aFirstWord = a.nome.split(' ')[0].toLowerCase();
-      const bFirstWord = b.nome.split(' ')[0].toLowerCase();
-      const aStarts = aFirstWord.startsWith(searchLower);
-      const bStarts = bFirstWord.startsWith(searchLower);
-  
-      if (aStarts === bStarts) return 0;
-      return aStarts ? -1 : 1;
-    });
+  let sortedProducts = products;
+
+  const fuse = new Fuse(products, {
+    keys: [
+      { name: 'nome', weight: 0.9 },
+      { name: 'fornecedor', weight: 0.1 },
+    ],
+    includeScore: true,
+    shouldSort: true,
+    threshold: 0.2,
+    ignoreLocation: true,
+    useExtendedSearch: true,
+  });
+
+  if (searchQuery.length > 0) {
+    sortedProducts = fuse
+      .search(searchQuery)
+      .map((result) => result.item);
+  }
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -82,9 +80,9 @@ export default function Products() {
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   return (
-    <div className="flex bg-gray-50 dark:bg-gray-900">
+    <div className="flex bg-gray-50 dark:bg-gray-900 min-h-screen">
       <SideBar />
-      <div className="flex-1 p-6">
+      <div className="flex-1 p-2 md:p-6 ml-14 md:ml-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -92,7 +90,6 @@ export default function Products() {
         >
           <div className="flex justify-between items-center mb-7">
             <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
-              <FiMonitor className="text-indigo-600" />
               Inventário de Produtos
             </h1>
             <div className='flex items-center gap-2'>
@@ -111,15 +108,14 @@ export default function Products() {
                 </div>
                 <button
                     onClick={() => {
-                    const worksheet = XLSX.utils.json_to_sheet(products);
+                    const worksheet = XLSX.utils.json_to_sheet(sortedProducts);
                     const workbook = XLSX.utils.book_new();
                     XLSX.utils.book_append_sheet(workbook, worksheet, 'Produtos');
                     XLSX.writeFile(workbook, 'produtos.xlsx');
                     }}
-                    className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors cursor-pointer"
+                    className="flex items-center gap-2 px-2 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors cursor-pointer"
                 >
-                    <FaFileExcel />
-                    Exportar
+                    <FaFileExcel size={26} />
                 </button>
             </div>
           </div>

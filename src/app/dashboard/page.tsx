@@ -96,18 +96,18 @@ export default function Dashboard() {
   return (
     <div className="flex bg-gray-50 dark:bg-gray-900">
       <SideBar />
-      <div className="flex-1 p-6">
+      <div className="flex-1 p-2 md:p-6 ml-14 md:ml-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <div className="flex justify-between items-center mb-8">
+          <div className="flex justify-between items-center mb-7">
             <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Pedidos Dashboard</h1>
             <span className="text-indigo-600 dark:text-indigo-400">Hoje: {new Date().toLocaleDateString()}</span>
           </div>
 
-          <div className="grid grid-cols-4 gap-6 mb-8 cursor-pointer">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 cursor-pointer">
             {stats.map((stat, index) => (
               <motion.div
                 key={index}
@@ -128,7 +128,7 @@ export default function Dashboard() {
 
           <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm mb-8">
             <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Price Trends Analysis</h2>
-            <div className="h-96">
+            <div className="h-96 w-[99%]">
               <Line 
                 data={chartData}
                 options={{
