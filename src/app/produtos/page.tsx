@@ -52,24 +52,43 @@ export default function Products() {
     fetchProducts();
   }, []);
 
-  let sortedProducts = products;
-
-  const fuse = new Fuse(products, {
+  const fuseStrict = new Fuse(products, {
     keys: [
       { name: 'nome', weight: 0.9 },
       { name: 'fornecedor', weight: 0.1 },
     ],
     includeScore: true,
     shouldSort: true,
-    threshold: 0.2,
+    threshold: 0.3,
+    ignoreLocation: false,
+    useExtendedSearch: true,
+  });
+  
+  const fuseLoose = new Fuse(products, {
+    keys: [
+      { name: 'nome', weight: 0.9 },
+      { name: 'fornecedor', weight: 0.1 },
+    ],
+    includeScore: true,
+    shouldSort: true,
+    threshold: 0.4,       
     ignoreLocation: true,
     useExtendedSearch: true,
   });
-
+  
+  let sortedProducts = products
+  
   if (searchQuery.length > 0) {
-    sortedProducts = fuse
-      .search(searchQuery)
-      .map((result) => result.item);
+    // First attempt: strict search (prefix)
+    const strictResults = fuseStrict.search(`^${searchQuery}`);
+  
+    if (strictResults.length > 0) {
+      // if strict results found, use them
+      sortedProducts = strictResults.map((result) => result.item);
+    } else {
+      // otherwise fallback to loose search
+      sortedProducts = fuseLoose.search(searchQuery).map((result) => result.item);
+    }
   }
 
   const indexOfLastItem = currentPage * itemsPerPage;
