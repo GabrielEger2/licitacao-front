@@ -94,7 +94,7 @@ export default function Dashboard() {
   ];
 
   return (
-    <div className="flex bg-gray-50 dark:bg-gray-900">
+    <div className="flex-1 bg-gray-50 dark:bg-gray-900">
       <SideBar />
       <div className="flex-1 p-2 md:p-6 ml-14 md:ml-16">
         <motion.div
@@ -234,9 +234,6 @@ export default function Dashboard() {
                     <p className="text-gray-500 dark:text-gray-400 text-sm">{search.store}</p>
                   </div>
                   <span className="text-indigo-600 dark:text-indigo-400 font-medium">{search.price}</span>
-                  <span className="ml-4 px-3 py-1 bg-indigo-100 dark:bg-gray-600 text-indigo-600 dark:text-indigo-300 rounded-full text-sm">
-                    {search.status}
-                  </span>
                 </motion.div>
               ))}
             </div>

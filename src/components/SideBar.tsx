@@ -131,10 +131,10 @@ const TitleSection = ({ open }) => {
           )}
         </div>
         
-
-        {open && (
-        <ThemeToggle />
-        )}
+        <div className={`${open ? 'block' : 'hidden'} flex items-center gap-2`}>
+          <ThemeToggle />
+        </div>
+        
       </div>
     </div>
   );

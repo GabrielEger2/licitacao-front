@@ -79,14 +79,11 @@ export default function Products() {
   let sortedProducts = products
   
   if (searchQuery.length > 0) {
-    // First attempt: strict search (prefix)
     const strictResults = fuseStrict.search(`^${searchQuery}`);
   
     if (strictResults.length > 0) {
-      // if strict results found, use them
       sortedProducts = strictResults.map((result) => result.item);
     } else {
-      // otherwise fallback to loose search
       sortedProducts = fuseLoose.search(searchQuery).map((result) => result.item);
     }
   }
