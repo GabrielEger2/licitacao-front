@@ -1,31 +1,31 @@
 'use client'
 
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { FaMoon, FaSun } from 'react-icons/fa';
+import { AnimatePresence, motion } from 'framer-motion'
+import { useEffect, useState } from 'react'
+import { FaMoon, FaSun } from 'react-icons/fa'
 
 function ThemeToggle() {
   const [isDarkMode, setIsDarkMode] = useState(() => {
     if (typeof window !== 'undefined') {
-      return localStorage.getItem('theme') !== 'light';
+      return localStorage.getItem('theme') !== 'light'
     }
-    return true; // default to dark mode
-  });
+    return true
+  })
 
   useEffect(() => {
-    const root = document.documentElement;
+    const root = document.documentElement
     if (isDarkMode) {
-      root.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
+      root.classList.add('dark')
+      localStorage.setItem('theme', 'dark')
     } else {
-      root.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
+      root.classList.remove('dark')
+      localStorage.setItem('theme', 'light')
     }
-  }, [isDarkMode]);
+  }, [isDarkMode])
 
   const toggleTheme = () => {
-    setIsDarkMode((prevMode) => !prevMode);
-  };
+    setIsDarkMode((prevMode) => !prevMode)
+  }
 
   return (
     <motion.button
@@ -51,7 +51,7 @@ function ThemeToggle() {
         </motion.div>
       </AnimatePresence>
     </motion.button>
-  );
+  )
 }
 
-export default ThemeToggle;
+export default ThemeToggle

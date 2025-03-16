@@ -1,10 +1,11 @@
 'use client'
 
-import React from "react";
-import { motion } from "framer-motion";
-import { FiArrowUpRight, FiStar } from "react-icons/fi";
-import Image from "next/image";
-import Link from "next/link";
+import Button from '@/components/ui/Button'
+import Input from '@/components/ui/Input'
+import { motion } from 'framer-motion'
+import Image from 'next/image'
+import Link from 'next/link'
+import { FiArrowUpRight, FiStar } from 'react-icons/fi'
 
 export default function Home() {
   return (
@@ -13,8 +14,8 @@ export default function Home() {
       <Form />
       <SupplementalContent />
     </section>
-  );
-};
+  )
+}
 
 const Form = () => {
   return (
@@ -40,51 +41,32 @@ const Form = () => {
 
         <form onSubmit={(e) => e.preventDefault()} className="w-full">
           <motion.div variants={primaryVariants} className="mb-2 w-full">
-            <label
-              htmlFor="email-input"
-              className="mb-1 inline-block text-sm font-medium"
-            >
-              Email<span className="text-red-600">*</span>
-            </label>
-            <input
+            <Input
               id="email-input"
+              label="Email"
               type="email"
               placeholder="Insira seu email"
-              className="w-full rounded border-[1px] border-slate-300 px-2.5 py-1.5 focus:outline-indigo-600"
               required
             />
           </motion.div>
 
           <motion.div variants={primaryVariants} className="mb-2 w-full">
-            <label
-              htmlFor="password-input"
-              className="mb-1 inline-block text-sm font-medium"
-            >
-              Senha<span className="text-red-600">*</span>
-            </label>
-            <input
+            <Input
               id="password-input"
+              label="Senha"
               type="password"
               placeholder="Insira sua senha"
-              className="w-full rounded border-[1px] border-slate-300 px-2.5 py-1.5 focus:outline-indigo-600"
               required
             />
           </motion.div>
 
-          <Link href="/dashboard">
-            <motion.button
-              variants={primaryVariants}
-              whileTap={{
-                scale: 0.985,
-              }}
-              type="submit"
-              className="my-2 w-full rounded bg-indigo-600 px-4 py-2 text-center font-medium text-white transition-colors hover:bg-indigo-700 cursor-pointer"
-            >
-              Entrar
-            </motion.button>
-          </Link>
+          <motion.div variants={primaryVariants}>
+            <Link href="/dashboard">
+              <Button className="w-full mt-1 mb-2">Entrar</Button>
+            </Link>
+          </motion.div>
           <motion.p variants={primaryVariants} className="text-xs">
-            Ainda não tem uma conta?{" "}
+            Ainda não tem uma conta?{' '}
             <a className="text-indigo-600 underline" href="#">
               Entrar em contato
             </a>
@@ -92,16 +74,22 @@ const Form = () => {
         </form>
       </div>
     </motion.div>
-  );
-};
+  )
+}
 
 const SupplementalContent = () => {
   return (
-    <Link href='https://www.r7digital.com.br/' target="_blank" className="group sticky top-4 m-4 h-80 overflow-hidden rounded-3xl rounded-tl-[4rem] bg-slate-950 md:h-[calc(100vh_-_2rem)] cursor-pointer">
-      <img
+    <Link
+      href="https://www.r7digital.com.br/"
+      target="_blank"
+      className="group sticky top-4 m-4 h-80 overflow-hidden rounded-3xl rounded-tl-[4rem] bg-slate-950 md:h-[calc(100vh_-_2rem)] cursor-pointer"
+    >
+      <Image
         alt="An example image"
-        src="https://www.actian.com/wp-content/uploads/2023/11/AV36-A.jpg"
+        src="/imgs/login-poster.jpg"
         className="h-full w-full bg-white object-cover transition-all duration-500 group-hover:scale-105 group-hover:opacity-50"
+        width={1000}
+        height={2000}
       />
 
       <div className="absolute right-2 top-4 z-10">
@@ -127,7 +115,9 @@ const SupplementalContent = () => {
           variants={primaryVariants}
           className="mb-6 max-w-md text-sm text-slate-300"
         >
-          Localizada em Florianópolis, Santa Catarina, estamos há mais de 10 anos no mercado de TI. Trabalhamos exclusivamente com órgãos públicos nas esferas federal, estadual e municipal.
+          Localizada em Florianópolis, Santa Catarina, estamos há mais de 10
+          anos no mercado de TI. Trabalhamos exclusivamente com órgãos públicos
+          nas esferas federal, estadual e municipal.
         </motion.p>
         <div className="flex items-center gap-4">
           <div className="flex items-center">
@@ -169,7 +159,9 @@ const SupplementalContent = () => {
               <FiStar className="fill-yellow-300 text-sm text-yellow-300" />
               <FiStar className="fill-yellow-300 text-sm text-yellow-300" />
               <FiStar className="fill-yellow-300 text-sm text-yellow-300" />
-              <span className="ml-2 text-sm text-white -translate-y-0.5">5.0</span>
+              <span className="ml-2 text-sm text-white -translate-y-0.5">
+                5.0
+              </span>
             </motion.div>
             <motion.p
               variants={primaryVariants}
@@ -181,23 +173,21 @@ const SupplementalContent = () => {
         </div>
       </motion.div>
     </Link>
-  );
-};
+  )
+}
 
 const Logo = () => {
   return (
-    <div
-      className="absolute left-[50%] top-4 -translate-x-[50%] fill-slate-950 md:left-4 md:-translate-x-0"
-    >
+    <div className="absolute left-[50%] top-4 -translate-x-[50%] fill-slate-950 md:left-4 md:-translate-x-0">
       <Image
-        alt="The Bloop logo"
+        alt="R7 Digital Logo"
         src="/imgs/logo.png"
         width={50}
         height={50}
       />
     </div>
-  );
-};
+  )
+}
 
 const primaryVariants = {
   initial: {
@@ -208,7 +198,7 @@ const primaryVariants = {
     y: 0,
     opacity: 1,
   },
-};
+}
 
 const avatarVariants = {
   initial: {
@@ -219,4 +209,4 @@ const avatarVariants = {
     x: 0,
     opacity: 1,
   },
-};
+}
