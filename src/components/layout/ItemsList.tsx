@@ -1,62 +1,52 @@
-import { AnimatePresence, motion } from "framer-motion";
+import Link from 'next/link'
+import { BiHeart } from 'react-icons/bi'
+import Button from '../ui/Button'
 
-export default function ItemsList(
-    { items }: { items: any[] }
-) {
-    return (
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm overflow-hidden">
-              <AnimatePresence>
-                <div className="divide-y divide-gray-200 dark:divide-gray-700">
-                  {items.map((product) => (
-                    <motion.div
-                      key={product.id}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: 20 }}
-                      transition={{ duration: 0.2 }}
-                      className="grid grid-cols-12 gap-4 px-6 py-4 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-                    >
-                      <div className="col-span-2 flex items-center">
-                        <img
-                          src={product.imagem}
-                          alt={product.nome}
-                          className="w-16 h-16 object-cover rounded-lg"
-                        />
-                      </div>
-                      <div className="col-span-3">
-                        <p className="text-sm text-gray-600 dark:text-gray-300 font-semibold">
-                          {product.nome}
-                        </p>
-                      </div>
-                      <div className="col-span-2">
-                        <p className="text-sm text-gray-600 dark:text-gray-300">
-                          {product.categoria}
-                        </p>
-                      </div>
-                      <div className="col-span-2">
-                        <p className="text-sm text-gray-600 dark:text-gray-300 font-bold">
-                          R${product.preco}
-                        </p>
-                      </div>
-                      <div className="col-span-2">
-                        <p className="text-sm text-gray-600 dark:text-gray-300">
-                          {product.fornecedor}
-                        </p>
-                      </div>
-                      <div className="col-span-1">
-                        <a
-                          href={product.site}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="text-indigo-600 dark:text-indigo-400 hover:underline"
-                        >
-                          Visitar
-                        </a>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-              </AnimatePresence>
+export default function ItemsList({ items }: { items: any[] }) {
+  return (
+    <div className="overflow-hidden">
+      <div className="space-y-2">
+        {items.map((product) => (
+          <div
+            key={product.id}
+            className="flex gap-4 px-10 py-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors bg-white dark:bg-gray-800 rounded shadow-sm"
+          >
+            <div className="w-full flex gap-10 items-center">
+              <div className="flex items-center">
+                <img
+                  src={product.imagem}
+                  alt={product.nome}
+                  className="w-28 h-28 object-cover rounded-lg"
+                />
+              </div>
+              <div>
+                <p className="text-sm text-gray-400 dark:text-gray-400">
+                  {product.fornecedor}
+                </p>
+                <p className="text-lg text-gray-600 dark:text-gray-300 font-semibold max-w-lg">
+                  {product.nome}
+                </p>
+              </div>
             </div>
-    )
+            <div className="w-96 border-l-2 border-gray-200 dark:border-gray-900 pl-4 flex flex-col items-center justify-between">
+              <div className="w-full justify-end flex">
+                <BiHeart
+                  size={24}
+                  className="text-gray-300 dark:text-gray-700 hover:text-red-500 transition-colors"
+                />
+              </div>
+              <div className="pb-2 w-full text-left">
+                <p className="text-2xl text-gray-600 dark:text-gray-300 font-semibold">
+                  R${product.preco}
+                </p>
+              </div>
+              <Link href={product.site}>
+                <Button className="w-68">Visitar</Button>
+              </Link>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
 }
