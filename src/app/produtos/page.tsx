@@ -32,9 +32,9 @@ export default function Products() {
   const [error, setError] = useState('')
   const [searchQuery, setSearchQuery] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
-  const itemsPerPage = 20
+  const [itemsPerPage, setItemsPerPage] = useState(20)
   const [selectedTypes, setSelectedTypes] = useState<string[]>([])
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 1000])
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 5000])
   const [viewType, setViewType] = useState<'grid' | 'list'>('grid')
 
   useEffect(() => {
@@ -113,7 +113,7 @@ export default function Products() {
       >
         <div className="flex items-start">
           <div className="w-full">
-            <div className="flex justify-between -translate-y-2">
+            <div className="flex justify-between -translate-y-2 md:mt-0 mt-4">
               <div className="flex w-full gap-2 items-center">
                 <Select
                   label="Exibir"
@@ -125,6 +125,8 @@ export default function Products() {
                     { value: '100', label: '100 Itens' },
                   ]}
                   className="max-w-40"
+                  value={itemsPerPage.toString()}
+                  onChange={(e) => setItemsPerPage(parseInt(e.target.value))}
                 />
                 <button
                   onClick={() => {
@@ -140,10 +142,9 @@ export default function Products() {
                   className="flex items-center px-2 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors cursor-pointer translate-y-1"
                 >
                   <FaFileExcel size={24} />
-                  <span className="ml-2">Exportar Excel</span>
                 </button>
               </div>
-              <div className="flex gap-4 items-center text-gray-700 dark:text-gray-300">
+              <div className="flex gap-4 items-center text-gray-700 dark:text-gray-300 translate-y-1">
                 <p className="whitespace-nowrap font-semibold">1024 Items</p>
                 <TbCategory
                   size={24}
@@ -179,7 +180,7 @@ export default function Products() {
               />
             </div>
           </div>
-          <div className="flex justify-center items-center mt-[5.05rem] w-96 h-full ">
+          <div className="xl:flex justify-center items-center mt-[5.05rem] w-96 h-full hidden">
             <Filters
               types={[
                 'T.I',

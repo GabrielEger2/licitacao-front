@@ -5,7 +5,7 @@ import Button from '../ui/Button'
 export default function ItemsCards({ items }: { items: any[] }) {
   return (
     <div className="overflow-hidden">
-      <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-3 2xl:grid-cols-5 gap-4">
         {items.map((product) => (
           <div
             key={product.id}
@@ -20,7 +20,7 @@ export default function ItemsCards({ items }: { items: any[] }) {
               <div className="absolute top-2 right-2">
                 <BiHeart
                   size={24}
-                  className="text-gray-300 dark:text-gray-700 hover:text-red-500 transition-colors"
+                  className="text-gray-300 dark:text-gray-700 hover:text-red-500 transition-colors cursor-pointer"
                 />
               </div>
             </div>

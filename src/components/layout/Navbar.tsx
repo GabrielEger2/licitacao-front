@@ -11,14 +11,14 @@ import Input from '../ui/Input'
 export default function Navbar() {
   return (
     <nav className="sticky top-0 z-50 w-full text-gray-900 dark:text-gray-200 bg-white border-b border-gray-300 dark:border-gray-700 py-[0.7rem] px-2 md:px-6  dark:bg-gray-900">
-      <div className="mx-auto flex items-center justify-between">
+      <div className="mx-auto flex items-center justify-between gap-10">
         <Input
           id="email-input"
           type="text"
           placeholder="Pesquisar Por..."
-          className="w-full max-w-2xl"
+          className="w-full md:max-w-2xl"
         />
-        <div className="hidden gap-2 lg:flex">
+        <div className="hidden gap-2 md:flex">
           <Image
             src="/imgs/logo.png"
             alt="Invictus Engenharia"
@@ -28,7 +28,7 @@ export default function Navbar() {
           <h1 className="tracking-tight leading-5">
             <span className="font-bold">R7Digital</span>
             <br />
-            <span className="text-sm">Informática e Serviços</span>
+            <span className="text-sm text-nowrap">Informática</span>
           </h1>
         </div>
         <MobileMenu />
@@ -58,7 +58,7 @@ const MobileMenuLink = ({ children, href, setMenuOpen }) => {
 const MobileMenu = () => {
   const [open, setOpen] = useState(false)
   return (
-    <div className="block lg:hidden">
+    <div className="block md:hidden">
       <button onClick={() => setOpen(true)} className="block text-3xl">
         <FiMenu />
       </button>
@@ -72,7 +72,6 @@ const MobileMenu = () => {
             className="fixed left-0 top-0 flex h-screen w-full flex-col bg-white"
           >
             <div className="flex items-center justify-between p-6">
-              <Logo color="black" />
               <button onClick={() => setOpen(false)}>
                 <FiX className="text-3xl text-neutral-950" />
               </button>

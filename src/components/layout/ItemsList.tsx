@@ -32,7 +32,7 @@ export default function ItemsList({ items }: { items: any[] }) {
               <div className="w-full justify-end flex">
                 <BiHeart
                   size={24}
-                  className="text-gray-300 dark:text-gray-700 hover:text-red-500 transition-colors"
+                  className="text-gray-300 dark:text-gray-600 hover:text-red-500 transition-colors cursor-pointer"
                 />
               </div>
               <div className="pb-2 w-full text-left">
