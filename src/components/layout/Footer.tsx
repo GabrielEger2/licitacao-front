@@ -1,8 +1,6 @@
-import {
-  BiLogoFacebookCircle,
-  BiLogoInstagramAlt,
-  BiLogoLinkedin,
-} from 'react-icons/bi'
+import { BiLogoGmail, BiLogoWhatsapp } from 'react-icons/bi'
+
+import Link from 'next/link'
 
 export default function Footer() {
   return (
@@ -20,42 +18,28 @@ export default function Footer() {
 
             <ul className="mt-8 flex gap-6">
               <li>
-                <a
-                  href="#"
+                <Link
+                  href="https://api.whatsapp.com/send?phone=48991949697"
                   rel="noreferrer"
                   target="_blank"
                   className="transition hover:opacity-75"
                 >
-                  <span className="sr-only">Facebook</span>
+                  <span className="sr-only">Whatsapp</span>
 
-                  <BiLogoFacebookCircle size={24} />
-                </a>
+                  <BiLogoWhatsapp size={24} />
+                </Link>
               </li>
 
               <li>
-                <a
-                  href="#"
-                  rel="noreferrer"
-                  target="_blank"
+                <Link
+                  type="email"
+                  href="mailto:financeiro@r7digital.com.br"
                   className="transition hover:opacity-75"
                 >
-                  <span className="sr-only">Instagram</span>
+                  <span className="sr-only">Gmail</span>
 
-                  <BiLogoInstagramAlt size={24} />
-                </a>
-              </li>
-
-              <li>
-                <a
-                  href="#"
-                  rel="noreferrer"
-                  target="_blank"
-                  className="transition hover:opacity-75"
-                >
-                  <span className="sr-only">LinkedIn</span>
-
-                  <BiLogoLinkedin size={24} />
-                </a>
+                  <BiLogoGmail size={24} />
+                </Link>
               </li>
             </ul>
           </div>
@@ -65,16 +49,28 @@ export default function Footer() {
               <p className="font-medium">Website</p>
               <ul className="mt-6 space-y-4 text-sm">
                 <li>
-                  <a href="#sobre-nos">Sobre Nós</a>
+                  <Link
+                    target="_blank"
+                    href="https://r7-digital.lojaintegrada.com.br/pagina/sobre-nos.html"
+                  >
+                    Sobre Nós
+                  </Link>
                 </li>
                 <li>
-                  <a href="#projetos">Projetos</a>
+                  <Link
+                    target="_blank"
+                    href="https://r7-digital.lojaintegrada.com.br/"
+                  >
+                    Serviços
+                  </Link>
                 </li>
                 <li>
-                  <a href="#servicos">Serviços</a>
-                </li>
-                <li>
-                  <a href="#contato">Contato</a>
+                  <Link
+                    target="_blank"
+                    href="https://r7-digital.lojaintegrada.com.br/pagina/trabalhe-conosco.html"
+                  >
+                    Trabalhe conosco
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -84,13 +80,20 @@ export default function Footer() {
 
               <ul className="mt-6 space-y-4 text-sm">
                 <li>
-                  <a href="#">Facebook</a>
+                  <Link
+                    target="_blank"
+                    href="https://www.facebook.com/R7Digital2017/"
+                  >
+                    Facebook
+                  </Link>
                 </li>
                 <li>
-                  <a href="#">Instagram</a>
-                </li>
-                <li>
-                  <a href="#">Linkedin</a>
+                  <Link
+                    target="_blank"
+                    href="https://www.linkedin.com/company/r7-digital/?originalSubdomain=br"
+                  >
+                    LinkedIn
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -99,10 +102,9 @@ export default function Footer() {
               <p className="font-medium">Serviços</p>
 
               <ul className="mt-6 space-y-4 text-sm">
-                <li>Engenharia Elétrica</li>
-                <li>Segurança do Trabalho</li>
-                <li>Projetos Ambientais</li>
-                <li>Subestações de Energia</li>
+                <li>Adesão de Atas</li>
+                <li>Consultoria</li>
+                <li>Licitações</li>
               </ul>
             </div>
 

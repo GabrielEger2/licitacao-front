@@ -74,13 +74,13 @@ function ProductsContent() {
 
   useEffect(() => {
     setCurrentPage(1)
-  }, [searchQuery])
+  }, [searchQuery, priceRange])
 
   let sortedProducts = products.filter((p) => {
     const price = parseFloat(p.preco)
     const isPriceInRange =
       price >= priceRange[0] &&
-      (priceRange[1] >= 1000 || price <= priceRange[1])
+      (priceRange[1] >= 2000 || price <= priceRange[1])
 
     return (
       isPriceInRange &&
