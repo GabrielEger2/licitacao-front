@@ -3,7 +3,6 @@
 
 'use client'
 
-import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -83,22 +82,13 @@ const Option = ({ Icon, title, open, href }) => {
             : 'text-slate-500 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700'
         }`}
       >
-        <motion.div
-          layout
-          className="grid h-full w-10 place-content-center text-lg"
-        >
+        <div className="grid h-full w-10 place-content-center text-lg">
           <Icon className="dark:text-slate-300" />
-        </motion.div>
+        </div>
         {open && (
-          <motion.span
-            layout
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.125 }}
-            className="text-xs font-medium dark:text-slate-200"
-          >
+          <span className="text-xs font-medium dark:text-slate-200">
             {title}
-          </motion.span>
+          </span>
         )}
       </button>
     </Link>
@@ -112,19 +102,14 @@ const TitleSection = ({ open }) => {
         <div className="flex items-center gap-2">
           <Logo />
           {open && (
-            <motion.div
-              layout
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.125 }}
-            >
+            <div>
               <span className="block text-xs font-semibold dark:text-white">
                 Perfil Teste
               </span>
               <span className="block text-xs text-slate-500 dark:text-slate-400">
                 Plano Pro
               </span>
-            </motion.div>
+            </div>
           )}
         </div>
 
@@ -138,7 +123,7 @@ const TitleSection = ({ open }) => {
 
 const Logo = () => {
   return (
-    <motion.div layout className="grid size-10 shrink-0 place-content-center">
+    <div className="grid size-10 shrink-0 place-content-center">
       <Image
         src="/imgs/logo.png"
         alt="Logo"
@@ -147,7 +132,7 @@ const Logo = () => {
         layout="fixed"
         className="rounded"
       />
-    </motion.div>
+    </div>
   )
 }
 
@@ -158,24 +143,13 @@ const ToggleClose = ({ open, setOpen }) => {
       className="absolute bottom-0 left-0 right-0 border-t cursor-pointer border-slate-300 dark:border-slate-700 transition-colors hover:bg-slate-100 dark:hover:bg-slate-700"
     >
       <div className="flex items-center p-2">
-        <motion.div
-          layout
-          className="grid size-10 place-content-center text-lg"
-        >
+        <div className="grid size-10 place-content-center text-lg">
           <FiChevronsRight
             className={`transition-transform ${open && 'rotate-180'} dark:text-slate-300`}
           />
-        </motion.div>
+        </div>
         {open && (
-          <motion.span
-            layout
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.125 }}
-            className="text-xs font-medium dark:text-white"
-          >
-            Reduzir
-          </motion.span>
+          <span className="text-xs font-medium dark:text-white">Reduzir</span>
         )}
       </div>
     </button>

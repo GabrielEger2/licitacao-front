@@ -11,6 +11,7 @@ import { DefaultPagination } from '@/components/layout/Pagination'
 import { Select } from '@/components/ui/Select'
 import { motion } from 'framer-motion'
 import Fuse from 'fuse.js'
+import { useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { FaFileExcel } from 'react-icons/fa'
 import { TbCategory, TbMenu2 } from 'react-icons/tb'
@@ -27,14 +28,16 @@ interface Product {
 }
 
 export default function Products() {
+  const searchParams = useSearchParams()
+
+  const searchQuery = searchParams.get('q') || ''
   const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
-  const [searchQuery, setSearchQuery] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [itemsPerPage, setItemsPerPage] = useState(20)
   const [selectedTypes, setSelectedTypes] = useState<string[]>([])
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 5000])
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 2000])
   const [viewType, setViewType] = useState<'grid' | 'list'>('grid')
 
   useEffect(() => {
@@ -59,7 +62,23 @@ export default function Products() {
     fetchProducts()
   }, [])
 
-  const fuseStrict = new Fuse(products, {
+  useEffect(() => {
+    setCurrentPage(1)
+  }, [searchQuery])
+
+  let sortedProducts = products.filter((p) => {
+    const price = parseFloat(p.preco)
+    const isPriceInRange =
+      price >= priceRange[0] &&
+      (priceRange[1] >= 1000 || price <= priceRange[1])
+
+    return (
+      isPriceInRange &&
+      (selectedTypes.length === 0 || selectedTypes.includes(p.categoria))
+    )
+  })
+
+  const fuseStrict = new Fuse(sortedProducts, {
     keys: [
       { name: 'nome', weight: 0.9 },
       { name: 'fornecedor', weight: 0.1 },
@@ -71,7 +90,7 @@ export default function Products() {
     useExtendedSearch: true,
   })
 
-  const fuseLoose = new Fuse(products, {
+  const fuseLoose = new Fuse(sortedProducts, {
     keys: [
       { name: 'nome', weight: 0.9 },
       { name: 'fornecedor', weight: 0.1 },
@@ -82,8 +101,6 @@ export default function Products() {
     ignoreLocation: true,
     useExtendedSearch: true,
   })
-
-  let sortedProducts = products
 
   if (searchQuery.length > 0) {
     const strictResults = fuseStrict.search(`^${searchQuery}`)
@@ -102,7 +119,10 @@ export default function Products() {
   const currentItems = sortedProducts.slice(indexOfFirstItem, indexOfLastItem)
   const totalPages = Math.ceil(sortedProducts.length / itemsPerPage)
 
-  const paginate = (pageNumber: number) => setCurrentPage(pageNumber)
+  const paginate = (pageNumber: number) => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+    setCurrentPage(pageNumber)
+  }
 
   return (
     <PageLayout>
@@ -145,7 +165,6 @@ export default function Products() {
                 </button>
               </div>
               <div className="flex gap-4 items-center text-gray-700 dark:text-gray-300 translate-y-1">
-                <p className="whitespace-nowrap font-semibold">1024 Items</p>
                 <TbCategory
                   size={24}
                   className={`cursor-pointer ${
@@ -166,17 +185,29 @@ export default function Products() {
                 />
               </div>
             </div>
-            {viewType === 'grid' ? (
-              <ItemsCards items={currentItems} />
-            ) : (
-              <ItemsList items={currentItems} />
-            )}
+            <div>
+              {currentItems.length === 0 ? (
+                <div className="min-h-[80vh] flex items-center justify-center">
+                  <h2 className="text-2xl text-gray-700 dark:text-gray-300">
+                    {loading
+                      ? 'Carregando...'
+                      : error.length > 0
+                        ? error
+                        : 'Nenhum produto encontrado'}
+                  </h2>
+                </div>
+              ) : viewType === 'grid' ? (
+                <ItemsCards items={currentItems} />
+              ) : (
+                <ItemsList items={currentItems} />
+              )}
+            </div>
 
             <div className="mt-8 flex justify-center">
               <DefaultPagination
                 currentPage={currentPage}
                 totalPages={totalPages}
-                paginate={paginate}
+                onPageChange={paginate}
               />
             </div>
           </div>

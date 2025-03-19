@@ -4,20 +4,43 @@
 
 import { AnimatePresence, motion } from 'framer-motion'
 import Image from 'next/image'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 import { FiArrowRight, FiMenu, FiX } from 'react-icons/fi'
+import Button from '../ui/Button'
 import Input from '../ui/Input'
 
 export default function Navbar() {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+
+  const searchQuery = searchParams.get('q') || ''
+  const [search, setSearch] = useState(searchQuery)
+
   return (
     <nav className="sticky top-0 z-50 w-full text-gray-900 dark:text-gray-200 bg-white border-b border-gray-300 dark:border-gray-700 py-[0.7rem] px-2 md:px-6  dark:bg-gray-900">
       <div className="mx-auto flex items-center justify-between gap-10">
-        <Input
-          id="email-input"
-          type="text"
-          placeholder="Pesquisar Por..."
-          className="w-full md:max-w-2xl"
-        />
+        <div className="flex w-full md:max-w-2xl">
+          <Input
+            id="email-input"
+            type="text"
+            placeholder="Pesquisar Por..."
+            className="rounded-r-none"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                router.push(`/produtos?q=${search}`)
+              }
+            }}
+          />
+          <Button
+            onClick={() => router.push(`/produtos?q=${search}`)}
+            className="rounded-l-none"
+          >
+            Pesquisar
+          </Button>
+        </div>
         <div className="hidden gap-2 md:flex">
           <Image
             src="/imgs/logo.png"
@@ -86,13 +109,6 @@ const MobileMenu = () => {
                   {l.text}
                 </MobileMenuLink>
               ))}
-              <MobileMenuLink
-                href="#contato"
-                key="Contato"
-                setMenuOpen={setOpen}
-              >
-                Contato
-              </MobileMenuLink>
             </div>
           </motion.nav>
         )}
@@ -103,19 +119,27 @@ const MobileMenu = () => {
 
 const LINKS = [
   {
-    text: 'Sobre Nós',
-    href: '#sobre-nos',
+    text: 'Dashboard',
+    href: '/dashboard',
   },
   {
-    text: 'Serviços',
-    href: '#servicos',
+    text: 'Produtos',
+    href: '/produtos',
   },
   {
-    text: 'Projetos',
-    href: '#projetos',
+    text: 'Selecionados v.2',
+    href: '/selecionados',
   },
   {
-    text: 'FAQ',
-    href: '#faq',
+    text: 'IA Aplicada v.2',
+    href: '/ia',
+  },
+  {
+    text: 'Análie v.3',
+    href: '/analise',
+  },
+  {
+    text: 'Usuários v.2',
+    href: '/usuarios',
   },
 ]

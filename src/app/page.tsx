@@ -5,6 +5,8 @@ import Input from '@/components/ui/Input'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 import { FiArrowUpRight, FiStar } from 'react-icons/fi'
 
 export default function Home() {
@@ -18,6 +20,10 @@ export default function Home() {
 }
 
 const Form = () => {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const router = useRouter()
+
   return (
     <motion.div
       initial="initial"
@@ -47,6 +53,8 @@ const Form = () => {
               type="email"
               placeholder="Insira seu email"
               required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </motion.div>
 
@@ -57,13 +65,25 @@ const Form = () => {
               type="password"
               placeholder="Insira sua senha"
               required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </motion.div>
 
           <motion.div variants={primaryVariants}>
-            <Link href="/dashboard">
-              <Button className="w-full mt-1 mb-2">Entrar</Button>
-            </Link>
+            <Button
+              onClick={() => {
+                if (email === 'teste@admin.com' && password === '123') {
+                  router.push('/dashboard')
+                } else {
+                  alert('Email ou senha incorretos')
+                }
+              }}
+              disabled={!email || !password}
+              className="w-full mt-1 mb-2"
+            >
+              Entrar
+            </Button>
           </motion.div>
           <motion.p variants={primaryVariants} className="text-xs">
             Ainda não tem uma conta?{' '}

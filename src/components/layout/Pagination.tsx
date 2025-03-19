@@ -1,53 +1,43 @@
+'use client'
 
-import React from "react";
-import { BiArrowFromLeft, BiArrowFromRight } from "react-icons/bi";
-import Button from "../ui/Button";
+import { BiArrowFromLeft, BiArrowFromRight } from 'react-icons/bi'
+import Button from '../ui/Button'
 
-export function DefaultPagination() {
-  const [active, setActive] = React.useState(1);
- 
-  const getItemProps = (index: number) =>
-    ({
-      variant: active === index ? "filled" : "text",
-      color: "gray",
-      onClick: () => setActive(index),
-    } as any);
- 
-  const next = () => {
-    if (active === 5) return;
- 
-    setActive(active + 1);
-  };
- 
-  const prev = () => {
-    if (active === 1) return;
- 
-    setActive(active - 1);
-  };
- 
+interface DefaultPaginationProps {
+  currentPage: number
+  totalPages: number
+  onPageChange: (page: number) => void
+}
+
+export function DefaultPagination({
+  currentPage,
+  totalPages,
+  onPageChange,
+}: DefaultPaginationProps) {
+  const handlePrev = () => onPageChange(Math.max(1, currentPage - 1))
+  const handleNext = () => onPageChange(Math.min(totalPages, currentPage + 1))
+
   return (
     <div className="flex items-center gap-4">
       <Button
-        className="flex items-center gap-2"
-        onClick={prev}
-        disabled={active === 1}
+        className="flex items-center"
+        onClick={handlePrev}
+        disabled={currentPage === 1}
       >
         <BiArrowFromRight strokeWidth={2} className="h-5 w-4" />
       </Button>
-      <div className="flex items-center gap-2">
-        <Button {...getItemProps(1)}>1</Button>
-        <Button {...getItemProps(2)}>2</Button>
-        <Button {...getItemProps(3)}>3</Button>
-        <Button {...getItemProps(4)}>4</Button>
-        <Button {...getItemProps(5)}>5</Button>
-      </div>
+
+      <span className="text-gray-800 dark:text-gray-200">
+        Pagina {currentPage} de {totalPages}
+      </span>
+
       <Button
         className="flex items-center gap-2"
-        onClick={next}
-        disabled={active === 5}
+        onClick={handleNext}
+        disabled={currentPage === totalPages}
       >
         <BiArrowFromLeft strokeWidth={2} className="h-5 w-4" />
       </Button>
     </div>
-  );
+  )
 }

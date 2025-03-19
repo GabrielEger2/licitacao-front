@@ -79,7 +79,7 @@ export default function Filters({
                     type="number"
                     value={priceRange[1]}
                     onChange={(e) => {
-                      const newMax = parseInt(e.target.value || '5000')
+                      const newMax = parseInt(e.target.value || '2000')
                       setPriceRange([
                         newMax < priceRange[0] ? newMax : priceRange[0],
                         newMax,
@@ -87,17 +87,16 @@ export default function Filters({
                     }}
                     className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded bg-transparent text-gray-600 dark:text-gray-300"
                     min={priceRange[0]}
-                    max="5000"
+                    max="2000"
                   />
                 </div>
               </div>
 
-              {/* Dual Range Slider */}
               <div className="relative pt-4">
                 <input
                   type="range"
                   min="0"
-                  max="5000"
+                  max="2000"
                   value={priceRange[0]}
                   onChange={(e) =>
                     setPriceRange([parseInt(e.target.value), priceRange[1]])
@@ -107,7 +106,7 @@ export default function Filters({
                 <input
                   type="range"
                   min="0"
-                  max="5000"
+                  max="2000"
                   value={priceRange[1]}
                   onChange={(e) =>
                     setPriceRange([priceRange[0], parseInt(e.target.value)])
@@ -130,6 +129,7 @@ export default function Filters({
                 >
                   <input
                     type="checkbox"
+                    disabled
                     // checked={selectedTypes.includes(type)}
                     checked={true}
                     onChange={() => toggleType(type)}

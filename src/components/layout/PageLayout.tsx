@@ -12,11 +12,11 @@ export default function PageLayout({ children }: PageLayoutProps) {
       <SideBar />
       <div className="flex-1">
         <Navbar />
-        <main className="p-2 md:p-6 mb-10">{children}</main>
+        <main className="p-2 md:p-6 mb-10 bg-gray-50 dark:bg-gray-900">
+          {children}
+        </main>
         <Footer />
       </div>
     </div>
   )
 }
-
-

@@ -11,11 +11,11 @@ export default function Footer() {
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           <div>
             <div className="text-xl font-bold">
-              <h2>Invictus Engenharia</h2>
+              <h2>R7Dital</h2>
             </div>
 
             <p className="mt-4 max-w-xs">
-              Excelência em Engenharia Elétrica, Segurança e Sustentabilidade
+              Há mais de 10 anos no seguimento de T.I
             </p>
 
             <ul className="mt-8 flex gap-6">
@@ -137,7 +137,7 @@ export default function Footer() {
         </div>
 
         <p className="text-xs">
-          &copy; 2022. Invictus Engenharia. Todos os direitos reservados.
+          &copy; 2015. R7 Digital Informatica e Sevicos LTDA
         </p>
       </div>
     </footer>

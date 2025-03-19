@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://licitacao-three.vercel.app'),
   title: 'R7Dital - Análise de Licitação',
   description:
     'Aplicação Web da R7Dital para análise de licitações de produtos de informática',
@@ -29,7 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className='overflow-x-hidden'>{children}</body>
+      <body className="overflow-x-hidden">{children}</body>
     </html>
   )
 }
